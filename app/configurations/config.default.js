@@ -348,6 +348,11 @@ export default {
   },
 
   customizeSearch: {
+
+    airQuality: {
+      available: true,
+    },
+
     walkReluctance: {
       available: true,
     },

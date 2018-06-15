@@ -87,6 +87,7 @@ class SummaryPage extends React.Component {
     walkSpeed: 1.2,
     wheelchair: false,
     accessibilityOption: 0,
+    airQualityWeight: 0,
   };
 
   constructor(props, context) {
@@ -457,7 +458,8 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
           arriveBy: $arriveBy,
           transferPenalty: $transferPenalty,
           preferred: $preferred,
-          itineraryFiltering: $itineraryFiltering)
+          itineraryFiltering: $itineraryFiltering,
+          airQualityWeight: $airQualityWeight)
         {
           ${SummaryPlanContainer.getFragment('plan')}
           ${ItineraryTab.getFragment('searchTime')}

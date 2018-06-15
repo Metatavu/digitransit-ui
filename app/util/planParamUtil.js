@@ -15,6 +15,7 @@ export const defaultSettings = {
   walkReluctance: 2,
   walkSpeed: 1.2,
   ticketTypes: 'none',
+  airQualityWeight: 0,
 };
 
 function getIntermediatePlaces(intermediatePlaces) {
@@ -82,6 +83,10 @@ export const getSettings = () => {
       custSettings.transferPenalty !== undefined
         ? Number(custSettings.transferPenalty)
         : undefined,
+    airQualityWeight:
+      custSettings.airQualityWeight !== undefined
+        ? Number(custSettings.airQualityWeight)
+        : undefined,
   };
 };
 
@@ -118,6 +123,7 @@ export const preparePlanParams = config => (
         accessibilityOption,
         ticketTypes,
         transferPenalty,
+        airQualityWeight,
       },
     },
   },
@@ -175,6 +181,10 @@ export const preparePlanParams = config => (
         disableRemainingWeightHeuristic:
           modes && modes.split(',').includes('CITYBIKE'),
         itineraryFiltering: config.itineraryFiltering,
+        airQualityWeight:
+          airQualityWeight !== undefined
+            ? Number(airQualityWeight)
+            : settings.airQualityWeight,
       },
       nullOrUndefined,
     ),

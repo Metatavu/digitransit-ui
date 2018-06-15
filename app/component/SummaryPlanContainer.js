@@ -53,7 +53,7 @@ class SummaryPlanContainer extends React.Component {
       }
     });
   }
-
+  
   onSelectActive = index => {
     if (this.getActiveIndex() === index) {
       this.onSelectImmediately(index);
@@ -319,6 +319,7 @@ class SummaryPlanContainer extends React.Component {
       $modes: String!,
       $transferPenalty: Int!,
       $itineraryFiltering: Float!,
+      $airQualityWeight: Float!,
     ) { viewer {
         plan(
           fromPlace:$fromPlace,
@@ -339,6 +340,7 @@ class SummaryPlanContainer extends React.Component {
           modes:$modes
           transferPenalty:$transferPenalty,
           itineraryFiltering:$itineraryFiltering,
+          airQualityWeight:$airQualityWeight,
         ) {itineraries {startTime,endTime}}
       }
     }`;

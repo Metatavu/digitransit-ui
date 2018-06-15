@@ -141,6 +141,34 @@ class CustomizeSearch extends React.Component {
     ));
   };
 
+  getAirQualityWeightSlider = val => (
+    <section className="offcanvas-section">
+      <Slider
+        headerText={this.context.intl.formatMessage({
+          id: 'air-quality-weight',
+          defaultMessage: 'Air Quality importance',
+        })}
+        onSliderChange={e =>
+          this.replaceParams({
+            airQualityWeight: parseFloat(e.target.value),
+          })
+        }
+        min={0}
+        max={500}
+        value={val}
+        step={1}
+        minText={this.context.intl.formatMessage({
+          id: 'ignore-air-quality',
+          defaultMessage: 'Ignore air quality',
+        })}
+        maxText={this.context.intl.formatMessage({
+          id: 'prefer-clean-air',
+          defaultMessage: 'Prefer clean air',
+        })}
+      />
+    </section>
+  );
+
   getWalkReluctanceSlider = val => (
     <section className="offcanvas-section">
       <Slider
@@ -328,6 +356,7 @@ class CustomizeSearch extends React.Component {
       accessibilityOption: defaultSettings.accessibilityOption,
       modes: getDefaultModes(this.context.config).toString(),
       ticketTypes: defaultSettings.ticketTypes,
+      airQualityWeight: defaultSettings.airQualityWeight,
     });
   };
 
@@ -394,6 +423,10 @@ class CustomizeSearch extends React.Component {
               {this.getStreetModesToggleButtons()}
             </div>
           </section>
+
+          {config.customizeSearch.airQuality.available
+            ? this.getAirQualityWeightSlider(merged.airQualityWeight)
+            : null}
 
           {config.customizeSearch.walkReluctance.available
             ? this.getWalkReluctanceSlider(merged.walkReluctance)
