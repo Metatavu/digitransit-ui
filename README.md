@@ -4,7 +4,7 @@ This fork contains functionality for routing users by air quality. Air quality r
 
 Changes for the OpenTripPlanner can be found from following branch: 
 
-https://github.com/Metatavu/OpenTripPlanner/tree/clean-air-otp
+https://github.com/Metatavu/OpenTripPlanner/tree/clean-air-hsl
 
 [![Build Status](https://travis-ci.org/HSLdevcom/digitransit-ui.svg?branch=master)](https://travis-ci.org/HSLdevcom/digitransit-ui)
 [![codecov](https://codecov.io/gh/HSLdevcom/digitransit-ui/branch/master/graph/badge.svg)](https://codecov.io/gh/HSLdevcom/digitransit-ui)
