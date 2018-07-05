@@ -5,6 +5,7 @@ import elementResizeDetectorMaker from 'element-resize-detector';
 
 import LeafletMap from 'react-leaflet/es/Map';
 import TileLayer from 'react-leaflet/es/TileLayer';
+import WMSTileLayer from 'react-leaflet/es/WMSTileLayer';
 import AttributionControl from 'react-leaflet/es/AttributionControl';
 import ScaleControl from 'react-leaflet/es/ScaleControl';
 import ZoomControl from 'react-leaflet/es/ZoomControl';
@@ -150,6 +151,15 @@ export default class Map extends React.Component {
           minZoom={config.map.minZoom}
           maxZoom={config.map.maxZoom}
         />
+        {config.map.airQuality && config.map.airQuality.enabled &&
+        <WMSTileLayer
+          layers={config.map.airQuality.layers}
+          styles={config.map.airQuality.styles}
+          format="image/png"
+          transparent={true}
+          url={config.map.airQuality.url}
+        />
+        }
         <AttributionControl
           position="bottomleft"
           prefix="&copy; <a tabindex=&quot;-1&quot; href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a>"

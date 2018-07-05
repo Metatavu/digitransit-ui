@@ -118,6 +118,14 @@ export default {
     zoomOffset: -1,
     minZoom: 1,
     maxZoom: 18,
+
+    airQuality: {
+      enabled: true,
+      layers: "enfuser_hkimetro/AQI",
+      styles: "default-scalar/enfuser_hkimetro",
+      url: "https://sncwms.metatavu.io/wms"
+    },
+
     controls: {
       zoom: {
         // available controls positions: 'topleft', 'topright', 'bottomleft, 'bottomright'
