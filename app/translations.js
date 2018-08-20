@@ -1084,7 +1084,7 @@ const translations = {
     walk: 'kävelyn',
     'walk-distance-duration': 'Kävele {distance} ({duration})',
     walking: 'Kävelyn määrä',
-    'air-quality-weight': 'Ilman laadun markitys',
+    'air-quality-weight': 'Ilman laadun merkitys',
     'ignore-air-quality' :'Ilmanlaadulla ei merkitystä',
     'prefer-clean-air': 'Suosi puhdasta ilmaa',
     'walking-speed': 'Kävelynopeus',
