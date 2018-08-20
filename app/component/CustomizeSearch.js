@@ -141,9 +141,10 @@ class CustomizeSearch extends React.Component {
     ));
   };
 
-  getAirQualityWeightSlider = val => (
+  getAirQualityWeightSlider = (val, isDisabled) => (
     <section className="offcanvas-section">
       <Slider
+        isDisabled={isDisabled}
         headerText={this.context.intl.formatMessage({
           id: 'air-quality-weight',
           defaultMessage: 'Air Quality importance',
@@ -396,6 +397,11 @@ class CustomizeSearch extends React.Component {
       ...getCustomizedSettings(),
       ...this.context.location.query,
     };
+
+    const airQualityAvailable = config.customizeSearch.airQuality.available;
+    const locationQueryModes = this.context.location.query.modes;
+    const bisycleOrWalk = locationQueryModes && (locationQueryModes.includes('WALK') || locationQueryModes.includes('BICYCLE'));
+
     return (
       <div
         aria-hidden={!this.props.isOpen}
@@ -425,8 +431,8 @@ class CustomizeSearch extends React.Component {
             </div>
           </section>
 
-          {config.customizeSearch.airQuality.available
-            ? this.getAirQualityWeightSlider(merged.airQualityWeight)
+          {airQualityAvailable
+            ? this.getAirQualityWeightSlider(merged.airQualityWeight, bisycleOrWalk ? false : true)
             : null}
 
           {config.customizeSearch.walkReluctance.available

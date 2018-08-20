@@ -15,6 +15,7 @@ class Slider extends React.Component {
     maxText: PropTypes.string,
     writtenValue: PropTypes.string,
     value: PropTypes.number,
+    isDisabled: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -73,6 +74,7 @@ class Slider extends React.Component {
         className={cx(
           'slider-container',
           this.props.className,
+          this.props.isDisabled ? 'component-is-disabled' : '',
           this.state.modified ? 'modified' : '',
         )}
       >
@@ -95,7 +97,7 @@ class Slider extends React.Component {
           onChange={e => {
             this.props.onSliderChange(e);
           }}
-          value={this.props.value}
+          value={this.props.isDisabled ? 0 : this.props.value}
         />
         <span className="sub-header-h5 left">{this.props.minText}</span>
         <span className="sub-header-h5 right">{this.props.maxText}</span>
