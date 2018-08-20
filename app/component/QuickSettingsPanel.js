@@ -195,7 +195,7 @@ class QuickSettingsPanel extends React.Component {
     const quickOption = this.matchQuickOption();
     const airQualityAvailable = this.context.config.customizeSearch.airQuality.available;
     const locationQueryModes = this.context.location.query.modes;
-    const bisycleOrWalk = locationQueryModes && (locationQueryModes.includes('WALK') || locationQueryModes.includes('BICYCLE'));
+    const bicycleOrWalk = locationQueryModes && (locationQueryModes.includes('WALK') || locationQueryModes.includes('BICYCLE'));
 
     return (
       <div
@@ -261,7 +261,7 @@ class QuickSettingsPanel extends React.Component {
                   defaultMessage: 'Least walking',
                 })}
               </option>
-              {airQualityAvailable && (bisycleOrWalk || !locationQueryModes)
+              {airQualityAvailable && (bicycleOrWalk || !locationQueryModes)
                 ? 
                   <option value="prefer-clean-air">
                     {this.context.intl.formatMessage({
