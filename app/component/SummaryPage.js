@@ -30,8 +30,9 @@ import Loading from './Loading';
 import { getHomeUrl } from '../util/path';
 import withBreakpoint from '../util/withBreakpoint';
 import { validateServiceTimeRange } from '../util/timeUtils';
+import { defaultRoutingSettings } from '../util/planParamUtil';
 
-export const ITINERARYFILTERING_DEFAULT = 2.0;
+export const ITINERARYFILTERING_DEFAULT = 1.5;
 
 function getActiveIndex(state) {
   return (state && state.summaryPageSelected) || 0;
@@ -50,6 +51,7 @@ class SummaryPage extends React.Component {
     config: PropTypes.object,
     executeAction: PropTypes.func.isRequired,
     headers: PropTypes.object.isRequired,
+    piwik: PropTypes.object,
   };
 
   static propTypes = {
@@ -92,6 +94,7 @@ class SummaryPage extends React.Component {
     walkSpeed: 1.2,
     wheelchair: false,
     accessibilityOption: 0,
+    airQualityWeight: 0,
     ticketTypes: null,
   };
 
@@ -146,6 +149,7 @@ class SummaryPage extends React.Component {
   initCustomizableParameters = config => {
     this.customizableParameters = {
       ...SummaryPage.hcParameters,
+      ...this.context.config.defaultSettings,
       modes: Object.keys(config.transportModes)
         .filter(mode => config.transportModes[mode].defaultValue === true)
         .map(mode => config.modeToOTP[mode])
@@ -169,6 +173,13 @@ class SummaryPage extends React.Component {
   };
 
   toggleQuickSettingsPanel = val => {
+    if (this.context.piwik != null) {
+      this.context.piwik.trackEvent(
+        'ItinerarySettings',
+        'SettingsButtonClick',
+        val ? 'SettingsButtonExpand' : 'SettingsButtonCollapse',
+      );
+    }
     this.setState({ isQuickSettingsOpen: val });
   };
 
@@ -448,8 +459,25 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
           disableRemainingWeightHeuristic: $disableRemainingWeightHeuristic,
           arriveBy: $arriveBy,
           transferPenalty: $transferPenalty,
-          preferred: $preferred,
-          itineraryFiltering: $itineraryFiltering)
+          ignoreRealtimeUpdates: $ignoreRealtimeUpdates,
+          maxPreTransitTime: $maxPreTransitTime,
+          walkOnStreetReluctance: $walkOnStreetReluctance,
+          waitReluctance: $waitReluctance,
+          bikeSpeed: $bikeSpeed,
+          bikeSwitchTime: $bikeSwitchTime,
+          bikeSwitchCost: $bikeSwitchCost,
+          bikeBoardCost: $bikeBoardCost,
+          optimize: $optimize,
+          triangle: $triangle,
+          carParkCarLegWeight: $carParkCarLegWeight,
+          maxTransfers: $maxTransfers,
+          waitAtBeginningFactor: $waitAtBeginningFactor,
+          heuristicStepsPerMainStep: $heuristicStepsPerMainStep,
+          compactLegsByReversedSearch: $compactLegsByReversedSearch,
+          itineraryFiltering: $itineraryFiltering,
+          airQualityWeight: $airQualityWeight,
+          modeWeight: $modeWeight,
+          preferred: $preferred)
         {
           ${SummaryPlanContainer.getFragment('plan')}
           ${ItineraryTab.getFragment('searchTime')}
@@ -500,6 +528,7 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
       ticketTypes: null,
       itineraryFiltering: ITINERARYFILTERING_DEFAULT,
     },
+    ...defaultRoutingSettings,
     ...SummaryPage.hcParameters,
   },
 });

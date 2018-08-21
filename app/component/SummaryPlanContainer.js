@@ -8,7 +8,11 @@ import ItinerarySummaryListContainer from './ItinerarySummaryListContainer';
 import TimeNavigationButtons from './TimeNavigationButtons';
 import { getRoutePath } from '../util/path';
 import Loading from './Loading';
-import { preparePlanParams, getDefaultOTPModes } from '../util/planParamUtil';
+import {
+  preparePlanParams,
+  getDefaultOTPModes,
+  defaultRoutingSettings,
+} from '../util/planParamUtil';
 import withBreakpoint from '../util/withBreakpoint';
 
 class SummaryPlanContainer extends React.Component {
@@ -37,6 +41,7 @@ class SummaryPlanContainer extends React.Component {
     executeAction: PropTypes.func.isRequired,
     router: routerShape.isRequired,
     location: PropTypes.object.isRequired,
+    piwik: PropTypes.object,
   };
 
   onSelectActive = index => {
@@ -54,6 +59,14 @@ class SummaryPlanContainer extends React.Component {
   onSelectImmediately = index => {
     if (Number(this.props.params.hash) === index) {
       if (this.props.breakpoint === 'large') {
+        if (this.context.piwik != null) {
+          this.context.piwik.trackEvent(
+            'ItinerarySettings',
+            'ItineraryDetailsClick',
+            'ItineraryDetailsCollapse',
+            index,
+          );
+        }
         this.context.router.replace({
           ...this.context.location,
           pathname: getRoutePath(this.props.params.from, this.props.params.to),
@@ -62,6 +75,14 @@ class SummaryPlanContainer extends React.Component {
         this.context.router.goBack();
       }
     } else {
+      if (this.context.piwik != null) {
+        this.context.piwik.trackEvent(
+          'ItinerarySettings',
+          'ItineraryDetailsClick',
+          'ItineraryDetailsExpand',
+          index,
+        );
+      }
       const newState = {
         ...this.context.location,
         state: { summaryPageSelected: index },
@@ -88,6 +109,14 @@ class SummaryPlanContainer extends React.Component {
   };
 
   onLater = () => {
+    if (this.context.piwik != null) {
+      this.context.piwik.trackEvent(
+        'ItinerarySettings',
+        'ShowMoreRoutesClick',
+        'ShowMoreRoutesLater',
+      );
+    }
+
     const end = moment.unix(this.props.serviceTimeRange.end);
     const latestDepartureTime = this.props.itineraries.reduce(
       (previous, current) => {
@@ -129,7 +158,9 @@ class SummaryPlanContainer extends React.Component {
       );
 
       const tunedParams = {
+        wheelchair: null,
         ...{ modes: getDefaultOTPModes(this.props.config).join(',') },
+        ...defaultRoutingSettings,
         ...params,
         numItineraries:
           this.props.itineraries.length > 0 ? this.props.itineraries.length : 3,
@@ -165,7 +196,14 @@ class SummaryPlanContainer extends React.Component {
   };
 
   onEarlier = () => {
-    this.props.setLoading(true);
+    if (this.context.piwik != null) {
+      this.context.piwik.trackEvent(
+        'ItinerarySettings',
+        'ShowMoreRoutesClick',
+        'ShowMoreRoutesEarlier',
+      );
+    }
+
     const start = moment.unix(this.props.serviceTimeRange.start);
 
     const earliestArrivalTime = this.props.itineraries.reduce(
@@ -184,7 +222,7 @@ class SummaryPlanContainer extends React.Component {
 
     earliestArrivalTime.subtract(1, 'minutes');
 
-    if (this.context.location.query.arriveBy === true) {
+    if (this.context.location.query.arriveBy === 'true') {
       // user has arriveBy already
       this.context.router.replace({
         ...this.context.location,
@@ -194,13 +232,17 @@ class SummaryPlanContainer extends React.Component {
         },
       });
     } else {
+      this.props.setLoading(true);
+
       const params = preparePlanParams(this.props.config)(
         this.context.router.params,
         this.context,
       );
 
       const tunedParams = {
+        wheelchair: null,
         ...{ modes: getDefaultOTPModes(this.props.config).join(',') },
+        ...defaultRoutingSettings,
         ...params,
         numItineraries:
           this.props.itineraries.length > 0 ? this.props.itineraries.length : 3,
@@ -249,6 +291,14 @@ class SummaryPlanContainer extends React.Component {
   };
 
   onNow = () => {
+    if (this.context.piwik != null) {
+      this.context.piwik.trackEvent(
+        'ItinerarySettings',
+        'ShowMoreRoutesClick',
+        'ShowMoreRoutesNow',
+      );
+    }
+
     this.context.router.replace({
       ...this.context.location,
       query: {
@@ -268,6 +318,8 @@ class SummaryPlanContainer extends React.Component {
       $walkReluctance:Float!,
       $walkSpeed:Float!,
       $maxWalkDistance:Float!,
+      $wheelchair:Boolean!,
+      $disableRemainingWeightHeuristic:Boolean!,
       $preferred:InputPreferred!,
       $fromPlace:String!,
       $toPlace:String!
@@ -276,7 +328,24 @@ class SummaryPlanContainer extends React.Component {
       $arriveBy: Boolean!,
       $modes: String!,
       $transferPenalty: Int!,
+      $ignoreRealtimeUpdates: Boolean!,
+      $maxPreTransitTime: Int!,
+      $walkOnStreetReluctance: Float!,
+      $waitReluctance: Float!,
+      $bikeSpeed: Float!,
+      $bikeSwitchTime: Int!,
+      $bikeSwitchCost: Int!,
+      $bikeBoardCost: Int!,
+      $optimize: OptimizeType!,
+      $triangle: InputTriangle!,
+      $carParkCarLegWeight: Float!,
+      $maxTransfers: Int!,
+      $waitAtBeginningFactor: Float!,
+      $heuristicStepsPerMainStep: Int!,
+      $compactLegsByReversedSearch: Boolean!,
       $itineraryFiltering: Float!,
+      $airQualityWeight: Float!,
+      $modeWeight: InputModeWeight!,
     ) { viewer {
         plan(
           fromPlace:$fromPlace,
@@ -290,13 +359,30 @@ class SummaryPlanContainer extends React.Component {
           minTransferTime:$minTransferTime,
           walkSpeed:$walkSpeed,
           maxWalkDistance:$maxWalkDistance,
-          wheelchair:false,
-          disableRemainingWeightHeuristic:false,
+          wheelchair:$wheelchair,
+          disableRemainingWeightHeuristic:$disableRemainingWeightHeuristic,
           arriveBy:$arriveBy,
           preferred:$preferred,
           modes:$modes
           transferPenalty:$transferPenalty,
-          itineraryFiltering:$itineraryFiltering,
+          ignoreRealtimeUpdates:$ignoreRealtimeUpdates,
+          maxPreTransitTime:$maxPreTransitTime,
+          walkOnStreetReluctance:$walkOnStreetReluctance,
+          waitReluctance:$waitReluctance,
+          bikeSpeed:$bikeSpeed,
+          bikeSwitchTime:$bikeSwitchTime,
+          bikeSwitchCost:$bikeSwitchCost,
+          bikeBoardCost:$bikeBoardCost,
+          optimize:$optimize,
+          triangle:$triangle,
+          carParkCarLegWeight:$carParkCarLegWeight,
+          maxTransfers:$maxTransfers,
+          waitAtBeginningFactor:$waitAtBeginningFactor,
+          heuristicStepsPerMainStep:$heuristicStepsPerMainStep,
+          compactLegsByReversedSearch:$compactLegsByReversedSearch,
+          itineraryFiltering: $itineraryFiltering,
+          airQualityWeight:$airQualityWeight,
+          modeWeight: $modeWeight,
         ) {itineraries {startTime,endTime}}
       }
     }`;

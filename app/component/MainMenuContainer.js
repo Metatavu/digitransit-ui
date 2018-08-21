@@ -37,9 +37,9 @@ class MainMenuContainer extends Component {
   internalSetOffcanvas = newState => {
     if (this.context.piwik != null) {
       this.context.piwik.trackEvent(
-        'Offcanvas',
-        'Index',
-        newState ? 'open' : 'close',
+        'ItinerarySettings',
+        'ExtraSettingsPanelClick',
+        newState ? 'ExtraSettingsPanelOpen' : 'ExtraSettingsPanelClose',
       );
     }
 
@@ -72,6 +72,7 @@ class MainMenuContainer extends Component {
             open={this.getOffcanvasState()}
             openSecondary
             onRequestChange={this.onRequestChange}
+            style={{ position: 'absolute' }}
           >
             <MainMenu
               toggleVisibility={this.toggleOffcanvas}
