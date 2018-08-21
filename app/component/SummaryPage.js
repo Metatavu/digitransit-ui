@@ -51,6 +51,7 @@ class SummaryPage extends React.Component {
     config: PropTypes.object,
     executeAction: PropTypes.func.isRequired,
     headers: PropTypes.object.isRequired,
+    piwik: PropTypes.object,
   };
 
   static propTypes = {
@@ -148,6 +149,7 @@ class SummaryPage extends React.Component {
   initCustomizableParameters = config => {
     this.customizableParameters = {
       ...SummaryPage.hcParameters,
+      ...this.context.config.defaultSettings,
       modes: Object.keys(config.transportModes)
         .filter(mode => config.transportModes[mode].defaultValue === true)
         .map(mode => config.modeToOTP[mode])
@@ -171,6 +173,13 @@ class SummaryPage extends React.Component {
   };
 
   toggleQuickSettingsPanel = val => {
+    if (this.context.piwik != null) {
+      this.context.piwik.trackEvent(
+        'ItinerarySettings',
+        'SettingsButtonClick',
+        val ? 'SettingsButtonExpand' : 'SettingsButtonCollapse',
+      );
+    }
     this.setState({ isQuickSettingsOpen: val });
   };
 
@@ -466,8 +475,9 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
           heuristicStepsPerMainStep: $heuristicStepsPerMainStep,
           compactLegsByReversedSearch: $compactLegsByReversedSearch,
           itineraryFiltering: $itineraryFiltering,
-          preferred: $preferred,
-          airQualityWeight: $airQualityWeight)
+          airQualityWeight: $airQualityWeight,
+          modeWeight: $modeWeight,
+          preferred: $preferred)
         {
           ${SummaryPlanContainer.getFragment('plan')}
           ${ItineraryTab.getFragment('searchTime')}
