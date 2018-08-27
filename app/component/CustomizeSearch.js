@@ -155,9 +155,9 @@ class CustomizeSearch extends React.Component {
           })
         }
         min={0}
-        max={500}
+        max={10}
         value={val}
-        step={1}
+        step={0.01}
         minText={this.context.intl.formatMessage({
           id: 'ignore-air-quality',
           defaultMessage: 'Ignore air quality',

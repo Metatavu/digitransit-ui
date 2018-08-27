@@ -47,7 +47,7 @@ const quickOptions = {
   },
   'prefer-clean-air': {
     ...defaultSettings,
-    airQualityWeight: 100,
+    airQualityWeight: 2,
   },
 };
 
