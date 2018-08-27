@@ -120,12 +120,12 @@ export default {
     maxZoom: 18,
 
     airQuality: {
-      enabled: true,
-      layers: "enfuser_hkimetro/AQI",
-      styles: "default-scalar/enfuser_hkimetro",
-      url: "https://sncwms.metatavu.io/wms"
+      enabled: process.env.AIR_QUALITY_LAYER_ENABLED === "true",
+      layers: process.env.AIR_QUALITY_LAYER_LAYERS,
+      styles: process.env.AIR_QUALITY_LAYER_STYLES,
+      url: process.env.AIR_QUALITY_LAYER_URL
     },
-
+    
     controls: {
       zoom: {
         // available controls positions: 'topleft', 'topright', 'bottomleft, 'bottomright'
