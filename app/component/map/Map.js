@@ -5,7 +5,6 @@ import elementResizeDetectorMaker from 'element-resize-detector';
 
 import LeafletMap from 'react-leaflet/es/Map';
 import TileLayer from 'react-leaflet/es/TileLayer';
-import WMSTileLayer from 'react-leaflet/es/WMSTileLayer';
 import AttributionControl from 'react-leaflet/es/AttributionControl';
 import ScaleControl from 'react-leaflet/es/ScaleControl';
 import ZoomControl from 'react-leaflet/es/ZoomControl';
@@ -15,6 +14,7 @@ import 'leaflet-active-area';
 import 'leaflet/dist/leaflet.css';
 
 import PositionMarker from './PositionMarker';
+import AirQualityWmsLayer from './AirQualityWmsLayer';
 import VectorTileLayerContainer from './tile-layer/VectorTileLayerContainer';
 import { boundWithMinimumArea } from '../../util/geo-utils';
 import { isDebugTiles } from '../../util/browser';
@@ -152,7 +152,7 @@ export default class Map extends React.Component {
           maxZoom={config.map.maxZoom}
         />
         {config.map.airQuality && config.map.airQuality.enabled &&
-        <WMSTileLayer
+        <AirQualityWmsLayer
           layers={config.map.airQuality.layers}
           styles={config.map.airQuality.styles}
           format="image/png"
