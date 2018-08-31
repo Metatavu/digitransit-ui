@@ -5658,6 +5658,18 @@
                         "deprecationReason": null
                     },
                     {
+                        "name": "pollutionExposure",
+                        "description": "How much user has exposed to pollution.",
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Float",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
                         "name": "legs",
                         "description": "A list of Legs. Each Leg is either a walking (cycling, car) portion of the trip, or a transit trip on a particular vehicle. So a trip where the use walks to the Q train, transfers to the 6, then walks to their destination, has four legs.",
                         "args": [],

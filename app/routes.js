@@ -100,6 +100,12 @@ const planQueries = {
         ${Component.getFragment('plan', variables)}
       }
     }`,
+  airQualityPlan: (Component, variables) => Relay.QL`
+    query {
+      viewer {
+        ${Component.getFragment('airQualityPlan', variables)}
+      }
+    }`,
   serviceTimeRange: () => Relay.QL`query { serviceTimeRange }`,
 };
 

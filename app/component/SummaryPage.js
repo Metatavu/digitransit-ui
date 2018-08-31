@@ -66,6 +66,11 @@ class SummaryPage extends React.Component {
         itineraries: PropTypes.array,
       }).isRequired,
     }).isRequired,
+    airQualityPlan: PropTypes.shape({
+      plan: PropTypes.shape({
+        itineraries: PropTypes.array,
+      }).isRequired,
+    }).isRequired,
     serviceTimeRange: PropTypes.shape({
       start: PropTypes.number.isRequired,
       end: PropTypes.number.isRequired,
@@ -181,6 +186,7 @@ class SummaryPage extends React.Component {
       from,
       to,
     } = this.props;
+
     const activeIndex = getActiveIndex(state);
     const itineraries = (plan && plan.itineraries) || [];
 
@@ -311,11 +317,14 @@ class SummaryPage extends React.Component {
     if (this.props.breakpoint === 'large') {
       let content;
       if (this.state.loading === false && (done || error !== null)) {
+        const airQualityItineraries = this.props.airQualityPlan.plan.itineraries;
+        const itineraries = this.props.plan.plan.itineraries.concat(airQualityItineraries);
+
         content = (
           <SummaryPlanContainer
             plan={this.props.plan.plan}
             serviceTimeRange={serviceTimeRange}
-            itineraries={this.props.plan.plan.itineraries}
+            itineraries={itineraries}
             params={this.props.params}
             error={error}
             setLoading={this.setLoading}
@@ -438,6 +447,63 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
           intermediatePlaces: $intermediatePlaces,
           numItineraries: $numItineraries,
           modes: $modes,
+          date: $date,
+          time: $time,
+          walkReluctance: $walkReluctance,
+          walkBoardCost: $walkBoardCost,
+          minTransferTime: $minTransferTime,
+          walkSpeed: $walkSpeed,
+          maxWalkDistance: $maxWalkDistance,
+          wheelchair: $wheelchair,
+          ticketTypes: $ticketTypes,
+          disableRemainingWeightHeuristic: $disableRemainingWeightHeuristic,
+          arriveBy: $arriveBy,
+          transferPenalty: $transferPenalty,
+          ignoreRealtimeUpdates: $ignoreRealtimeUpdates,
+          maxPreTransitTime: $maxPreTransitTime,
+          walkOnStreetReluctance: $walkOnStreetReluctance,
+          waitReluctance: $waitReluctance,
+          bikeSpeed: $bikeSpeed,
+          bikeSwitchTime: $bikeSwitchTime,
+          bikeSwitchCost: $bikeSwitchCost,
+          bikeBoardCost: $bikeBoardCost,
+          optimize: $optimize,
+          triangle: $triangle,
+          carParkCarLegWeight: $carParkCarLegWeight,
+          maxTransfers: $maxTransfers,
+          waitAtBeginningFactor: $waitAtBeginningFactor,
+          heuristicStepsPerMainStep: $heuristicStepsPerMainStep,
+          compactLegsByReversedSearch: $compactLegsByReversedSearch,
+          itineraryFiltering: $itineraryFiltering,
+          preferred: $preferred)
+        {
+          ${SummaryPlanContainer.getFragment('plan')}
+          ${ItineraryTab.getFragment('searchTime')}
+          itineraries {
+            startTime
+            endTime
+            ${ItineraryTab.getFragment('itinerary')}
+            ${PrintableItinerary.getFragment('itinerary')}
+            ${SummaryPlanContainer.getFragment('itineraries')}
+            legs {
+              ${ItineraryLine.getFragment('legs')}
+              transitLeg
+              legGeometry {
+                points
+              }
+            }
+          }
+        }
+      }
+    `,
+    airQualityPlan: () => Relay.QL`
+      fragment on QueryType {
+        plan(
+          fromPlace: $fromPlace,
+          toPlace: $toPlace,
+          intermediatePlaces: $intermediatePlaces,
+          numItineraries: 1,
+          modes: "WALK",
           date: $date,
           time: $time,
           walkReluctance: $walkReluctance,

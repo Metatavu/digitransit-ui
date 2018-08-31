@@ -128,6 +128,7 @@ export default Relay.createContainer(ItinerarySummaryListContainer, {
     itineraries: () => Relay.QL`
       fragment on Itinerary @relay(plural:true){
         walkDistance
+        pollutionExposure
         startTime
         endTime
         legs {
