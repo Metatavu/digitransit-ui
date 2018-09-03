@@ -28,12 +28,20 @@ const FooterItem = ({ name, href, label, nameEn, route, icon }, { router }) => {
   const displayLabel = label || (
     <FormattedMessage id={name} defaultMessage={nameEn || name} />
   );
-  let item = (
+  let item;
+  if (icon) {
+  item = (
     <span id={name}>
       {displayIcon}
       {displayLabel}
     </span>
   );
+  } else {
+    item = (
+      <span dangerouslySetInnerHTML={{__html: label}} />
+    );
+  }
+
   if (href) {
     item = mapToLink(href, item);
   } else if (route) {
