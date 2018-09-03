@@ -153,6 +153,12 @@ class SummaryPage extends React.Component {
     this.setState({ center: { lat, lon } });
   };
 
+  getItineraries = () => {
+    const planItineraries = this.props.plan && this.props.plan.plan && this.props.plan.plan.itineraries ? this.props.plan.plan.itineraries : [];
+    const airQualityItineraries = this.props.airQualityPlan && this.props.airQualityPlan.plan && this.props.airQualityPlan.plan.itineraries ? this.props.airQualityPlan.plan.itineraries : [];
+    return planItineraries.concat(airQualityItineraries);
+  }
+
   initCustomizableParameters = config => {
     this.customizableParameters = {
       ...SummaryPage.hcParameters,
@@ -191,7 +197,7 @@ class SummaryPage extends React.Component {
     } = this.props;
 
     const activeIndex = getActiveIndex(state);
-    const itineraries = (plan && plan.itineraries) || [];
+    const itineraries = this.getItineraries();
 
     const leafletObjs = sortBy(
       itineraries.map((itinerary, i) => (
@@ -271,14 +277,9 @@ class SummaryPage extends React.Component {
       },
     } = this.context;
 
-    if (
-      this.props.routes[this.props.routes.length - 1].printPage &&
-      this.props.plan &&
-      this.props.plan.plan &&
-      this.props.plan.plan.itineraries
-    ) {
+    if (this.props.routes[this.props.routes.length - 1].printPage && this.getItineraries().length) {
       return React.cloneElement(this.props.content, {
-        itinerary: this.props.plan.plan.itineraries[this.props.params.hash],
+        itinerary: this.getItineraries()[this.props.params.hash],
         focus: this.updateCenter,
       });
     }
@@ -287,9 +288,7 @@ class SummaryPage extends React.Component {
     const map = this.props.map
       ? this.props.map.type(
           {
-            itinerary:
-              this.props.plan.plan.itineraries &&
-              this.props.plan.plan.itineraries[this.props.params.hash],
+            itinerary: this.getItineraries().length && this.getItineraries()[this.props.params.hash],
             center: this.state.center,
             ...this.props,
           },
@@ -300,16 +299,12 @@ class SummaryPage extends React.Component {
     let earliestStartTime;
     let latestArrivalTime;
 
-    if (
-      this.props.plan &&
-      this.props.plan.plan &&
-      this.props.plan.plan.itineraries
-    ) {
+    if (this.getItineraries().length) {
       earliestStartTime = Math.min(
-        ...this.props.plan.plan.itineraries.map(i => i.startTime),
+        ...this.getItineraries().map(i => i.startTime),
       );
       latestArrivalTime = Math.max(
-        ...this.props.plan.plan.itineraries.map(i => i.endTime),
+        ...this.getItineraries().map(i => i.endTime),
       );
     }
 
@@ -320,8 +315,7 @@ class SummaryPage extends React.Component {
     if (this.props.breakpoint === 'large') {
       let content;
       if (this.state.loading === false && (done || error !== null)) {
-        const airQualityItineraries = this.props.airQualityPlan.plan.itineraries;
-        const itineraries = this.props.plan.plan.itineraries.concat(airQualityItineraries);
+        const itineraries = this.getItineraries();
 
         content = (
           <SummaryPlanContainer
@@ -335,7 +329,7 @@ class SummaryPage extends React.Component {
           >
             {this.props.content &&
               React.cloneElement(this.props.content, {
-                itinerary: this.props.plan.plan.itineraries[
+                itinerary: this.getItineraries()[
                   this.props.params.hash
                 ],
                 focus: this.updateCenter,
@@ -388,7 +382,7 @@ class SummaryPage extends React.Component {
     } else if (this.props.params.hash) {
       content = (
         <MobileItineraryWrapper
-          itineraries={this.props.plan.plan.itineraries}
+          itineraries={this.getItineraries()}
           params={this.props.params}
           fullscreenMap={some(
             this.props.routes.map(route => route.fullscreenMap),
@@ -396,7 +390,7 @@ class SummaryPage extends React.Component {
           focus={this.updateCenter}
         >
           {this.props.content &&
-            this.props.plan.plan.itineraries.map((itinerary, i) =>
+            this.getItineraries().map((itinerary, i) =>
               React.cloneElement(this.props.content, { key: i, itinerary }),
             )}
         </MobileItineraryWrapper>
@@ -406,7 +400,7 @@ class SummaryPage extends React.Component {
         <SummaryPlanContainer
           plan={this.props.plan.plan}
           serviceTimeRange={serviceTimeRange}
-          itineraries={this.props.plan.plan.itineraries}
+          itineraries={this.getItineraries()}
           params={this.props.params}
           error={error}
           setLoading={this.setLoading}
