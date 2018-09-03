@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import WMSTileLayer from 'react-leaflet/es/WMSTileLayer';
+import moment from 'moment';
 
 export default class AirQualityWmsLayer extends React.Component {
   static propTypes = {
@@ -13,7 +14,7 @@ export default class AirQualityWmsLayer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {date: new Date()};
+    this.state = {date: moment().startOf('hour').toISOString()};
   }
 
   componentDidMount() {
@@ -26,18 +27,20 @@ export default class AirQualityWmsLayer extends React.Component {
 
   updateTime() {
     this.setState({
-      date: new Date()
+      date: moment().startOf('hour').toISOString()
     });
   }
 
   render() {
+    const styles = this.props.styles || "";
+
     return (
       <WMSTileLayer
         layers={this.props.layers}
-        styles={this.props.styles}
+        styles={styles}
         format={this.props.format}
         transparent={this.props.transparent}
-        url={`${this.props.url}&TIME=${this.state.date.toISOString()}`}
+        url={`${this.props.url}?time=${this.state.date}`}
       />
     );
   }
