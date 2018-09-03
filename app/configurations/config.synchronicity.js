@@ -96,21 +96,65 @@ export default {
   showTicketInformation: false,
   ticketLink: 'https://www.hsl.fi/liput-ja-hinnat',
 
+ // Control what transport modes that should be possible to select in the UI
+  // and whether the transport mode is used in trip planning by default.
   transportModes: {
+    bus: {
+      availableForSelection: true,
+      defaultValue: false,
+    },
+
+    tram: {
+      availableForSelection: true,
+      defaultValue: false,
+    },
+
+    rail: {
+      availableForSelection: true,
+      defaultValue: false,
+    },
+
+    subway: {
+      availableForSelection: true,
+      defaultValue: false,
+    },
+
+    citybike: {
+      availableForSelection: true, // TODO: Turn off in autumn
+      defaultValue: false, // always false
+    },
+
     airplane: {
-      availableForSelection: false,
+      availableForSelection: true,
+      defaultValue: false,
+    },
+
+    ferry: {
+      availableForSelection: true,
       defaultValue: false,
     },
   },
 
   streetModes: {
-    car_park: {
+    walk: {
+      availableForSelection: true,
+      defaultValue: true,
+      icon: 'walk',
+    },
+
+    bicycle: {
+      availableForSelection: true,
+      defaultValue: false,
+      icon: 'bicycle-withoutBox',
+    },
+
+    car: {
       availableForSelection: true,
       defaultValue: false,
       icon: 'car-withoutBox',
     },
 
-    car: {
+    car_park: {
       availableForSelection: false,
       defaultValue: false,
       icon: 'car_park-withoutBox',

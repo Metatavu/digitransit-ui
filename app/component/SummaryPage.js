@@ -99,10 +99,10 @@ class SummaryPage extends React.Component {
     wheelchair: false,
     accessibilityOption: 0,
     ticketTypes: null,
-    airQualityPenaltyThresholdLow: 0,
-    airQualityPenaltyThresholdHigh: 0,
-    airQualityPenaltyLowRate: 0,
-    airQualityPenaltyHighRate: 0,
+    airQualityPenaltyThresholdLow: 1.8,
+    airQualityPenaltyThresholdHigh: 2.3,
+    airQualityPenaltyLowRate: 10,
+    airQualityPenaltyHighRate: 50,
   };
 
   constructor(props, context) {
