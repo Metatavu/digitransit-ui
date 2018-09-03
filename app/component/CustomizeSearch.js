@@ -141,35 +141,6 @@ class CustomizeSearch extends React.Component {
     ));
   };
 
-  getAirQualityWeightSlider = (val, isIgnored) => (
-    <section className="offcanvas-section">
-      <Slider
-        isIgnored={isIgnored}
-        headerText={this.context.intl.formatMessage({
-          id: 'air-quality-weight',
-          defaultMessage: 'Air Quality importance',
-        })}
-        onSliderChange={e =>
-          this.replaceParams({
-            airQualityWeight: parseFloat(e.target.value),
-          })
-        }
-        min={0}
-        max={10}
-        value={val}
-        step={0.01}
-        minText={this.context.intl.formatMessage({
-          id: 'ignore-air-quality',
-          defaultMessage: 'Ignore air quality',
-        })}
-        maxText={this.context.intl.formatMessage({
-          id: 'prefer-clean-air',
-          defaultMessage: 'Prefer clean air',
-        })}
-      />
-    </section>
-  );
-
   getWalkReluctanceSlider = val => (
     <section className="offcanvas-section">
       <Slider
@@ -358,7 +329,6 @@ class CustomizeSearch extends React.Component {
       accessibilityOption: defaultSettings.accessibilityOption,
       modes: getDefaultModes(this.context.config).toString(),
       ticketTypes: defaultSettings.ticketTypes,
-      airQualityWeight: defaultSettings.airQualityWeight,
     });
   };
 
@@ -398,10 +368,6 @@ class CustomizeSearch extends React.Component {
       ...this.context.location.query,
     };
 
-    const airQualityAvailable = config.customizeSearch.airQuality.available;
-    const locationQueryModes = this.context.location.query.modes;
-    const bicycleOrWalk = locationQueryModes != null && (locationQueryModes.includes('WALK') || locationQueryModes.includes('BICYCLE'));
-    console.log(!bicycleOrWalk);
 
     return (
       <div
@@ -431,10 +397,6 @@ class CustomizeSearch extends React.Component {
               {this.getStreetModesToggleButtons()}
             </div>
           </section>
-
-          {airQualityAvailable
-            ? this.getAirQualityWeightSlider(merged.airQualityWeight, !bicycleOrWalk)
-            : null}
 
           {config.customizeSearch.walkReluctance.available
             ? this.getWalkReluctanceSlider(merged.walkReluctance)

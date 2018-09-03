@@ -18,7 +18,6 @@ const quickOptionParams = [
   'walkBoardCost',
   'walkReluctance',
   'transferPenalty',
-  'airQualityWeight',
 ];
 
 const quickOptions = {
@@ -44,10 +43,6 @@ const quickOptions = {
     walkBoardCost: 360,
     walkReluctance: 5,
     transferPenalty: 0,
-  },
-  'prefer-clean-air': {
-    ...defaultSettings,
-    airQualityWeight: 2,
   },
 };
 
@@ -95,7 +90,6 @@ class QuickSettingsPanel extends React.Component {
         walkBoardCost: chosenMode.walkBoardCost,
         walkReluctance: chosenMode.walkReluctance,
         transferPenalty: chosenMode.transferPenalty,
-        airQualityWeight: chosenMode.airQualityWeight,
       },
     });
   };
@@ -261,15 +255,6 @@ class QuickSettingsPanel extends React.Component {
                   defaultMessage: 'Least walking',
                 })}
               </option>
-              {airQualityAvailable && (bicycleOrWalk || !locationQueryModes)
-                ? 
-                  <option value="prefer-clean-air">
-                    {this.context.intl.formatMessage({
-                      id: 'route-prefer-clean-air',
-                      defaultMessage: 'Prefer clean air',
-                    })}
-                  </option>
-                : null}}
               {quickOption === 'customized-mode' && (
                 <option value="customized-mode">
                   {this.context.intl.formatMessage({

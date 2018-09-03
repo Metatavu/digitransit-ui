@@ -18,7 +18,10 @@ export const defaultSettings = {
   walkReluctance: 2,
   walkSpeed: 1.2,
   ticketTypes: 'none',
-  airQualityWeight: 0,
+  airQualityPenaltyThresholdLow: 0,
+  airQualityPenaltyThresholdHigh: 0,
+  airQualityPenaltyLowRate: 0,
+  airQualityPenaltyHighRate: 0,
 };
 
 // These values need to be null so if no values for the variables are defined somewhere else,
@@ -40,6 +43,10 @@ export const defaultRoutingSettings = {
   heuristicStepsPerMainStep: null,
   compactLegsByReversedSearch: null,
   disableRemainingWeightHeuristic: null,
+  airQualityPenaltyThresholdLow: null,
+  airQualityPenaltyThresholdHigh: null,
+  airQualityPenaltyLowRate: null,
+  airQualityPenaltyHighRate: null,
 };
 
 function getIntermediatePlaces(intermediatePlaces) {
@@ -143,10 +150,22 @@ export const getSettings = () => {
       custSettings.transferPenalty !== undefined
         ? Number(custSettings.transferPenalty)
         : undefined,
-    airQualityWeight:
-        custSettings.airQualityWeight !== undefined
-          ? Number(custSettings.airQualityWeight)
-          : undefined,
+    airQualityPenaltyThresholdLow:
+      custSettings.airQualityPenaltyThresholdLow !== undefined
+        ? Number(custSettings.airQualityPenaltyThresholdLow)
+        : undefined,
+    airQualityPenaltyThresholdHigh:
+      custSettings.airQualityPenaltyThresholdHigh !== undefined
+        ? Number(custSettings.airQualityPenaltyThresholdHigh)
+        : undefined,
+    airQualityPenaltyLowRate:
+      custSettings.airQualityPenaltyLowRate !== undefined
+        ? Number(custSettings.airQualityPenaltyLowRate)
+        : undefined,
+    airQualityPenaltyHighRate:
+      custSettings.airQualityPenaltyHighRate !== undefined
+        ? Number(custSettings.airQualityPenaltyHighRate)
+        : undefined,
     maxWalkDistance:
       routingSettings.maxWalkDistance !== undefined
         ? Number(routingSettings.maxWalkDistance)
@@ -267,7 +286,10 @@ export const preparePlanParams = config => (
         accessibilityOption,
         ticketTypes,
         transferPenalty,
-        airQualityWeight,
+        airQualityPenaltyThresholdLow,
+        airQualityPenaltyThresholdHigh,
+        airQualityPenaltyLowRate,
+        airQualityPenaltyHighRate,
       },
     },
   },
@@ -344,10 +366,22 @@ export const preparePlanParams = config => (
             ? settings.itineraryFiltering
             : config.itineraryFiltering,
         preferred: { agencies: config.preferredAgency || '' },
-        airQualityWeight:
-          airQualityWeight !== undefined
-            ? Number(airQualityWeight)
-            : settings.airQualityWeight,
+        airQualityPenaltyThresholdLow:
+          airQualityPenaltyThresholdLow !== undefined
+            ? Number(settings.airQualityPenaltyThresholdLow)
+            : undefined,
+        airQualityPenaltyThresholdHigh:
+          airQualityPenaltyThresholdHigh !== undefined
+            ? Number(settings.airQualityPenaltyThresholdHigh)
+            : undefined,
+        airQualityPenaltyLowRate:
+          airQualityPenaltyLowRate !== undefined
+            ? Number(settings.airQualityPenaltyLowRate)
+            : undefined,
+        airQualityPenaltyHighRate:
+          airQualityPenaltyHighRate !== undefined
+            ? Number(settings.airQualityPenaltyHighRate)
+            : undefined,
         disableRemainingWeightHeuristic: getDisableRemainingWeightHeuristic(
           modes,
           settings,

@@ -94,9 +94,6 @@ export function setCustomizedSettings(data) {
     transferPenalty: data.transferPenalty
       ? data.transferPenalty
       : oldSettings.transferPenalty,
-    airQualityWeight: data.airQualityWeight
-      ? data.airQualityWeight
-      : oldSettings.airQualityWeight,
   };
   setItem('customizedSettings', newSettings);
 }

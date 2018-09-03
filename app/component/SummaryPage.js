@@ -98,8 +98,11 @@ class SummaryPage extends React.Component {
     walkSpeed: 1.2,
     wheelchair: false,
     accessibilityOption: 0,
-    airQualityWeight: 0,
     ticketTypes: null,
+    airQualityPenaltyThresholdLow: 0,
+    airQualityPenaltyThresholdHigh: 0,
+    airQualityPenaltyLowRate: 0,
+    airQualityPenaltyHighRate: 0,
   };
 
   constructor(props, context) {
@@ -533,7 +536,10 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
           compactLegsByReversedSearch: $compactLegsByReversedSearch,
           itineraryFiltering: $itineraryFiltering,
           preferred: $preferred,
-          airQualityWeight: $airQualityWeight)
+          airQualityPenaltyThresholdLow: $airQualityPenaltyThresholdLow,
+          airQualityPenaltyThresholdHigh: $airQualityPenaltyThresholdHigh,
+          airQualityPenaltyLowRate: $airQualityPenaltyLowRate,
+          airQualityPenaltyHighRate: $airQualityPenaltyHighRate)
         {
           ${SummaryPlanContainer.getFragment('plan')}
           ${ItineraryTab.getFragment('searchTime')}

@@ -50,9 +50,6 @@ class SaveCustomizedSettingsButton extends React.Component {
       transferPenalty: this.context.location.query.transferPenalty
         ? this.context.location.query.transferPenalty
         : undefined,
-      airQualityWeight: this.context.location.query.airQualityWeight
-        ? this.context.location.query.airQualityWeight
-        : undefined,
     };
 
     setCustomizedSettings(settings);

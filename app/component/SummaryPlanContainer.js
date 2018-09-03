@@ -303,7 +303,10 @@ class SummaryPlanContainer extends React.Component {
       $heuristicStepsPerMainStep: Int!,
       $compactLegsByReversedSearch: Boolean!,
       $itineraryFiltering: Float!,
-      $airQualityWeight: Float!,
+      $airQualityPenaltyThresholdLow: Float!,
+      $airQualityPenaltyThresholdHigh: Float!,
+      $airQualityPenaltyLowRate: Float!,
+      $airQualityPenaltyHighRate: Float!,
     ) { viewer {
         plan(
           fromPlace:$fromPlace,
@@ -339,7 +342,10 @@ class SummaryPlanContainer extends React.Component {
           heuristicStepsPerMainStep:$heuristicStepsPerMainStep,
           compactLegsByReversedSearch:$compactLegsByReversedSearch,
           itineraryFiltering: $itineraryFiltering,
-          airQualityWeight:$airQualityWeight,
+          airQualityPenaltyThresholdLow: $airQualityPenaltyThresholdLow
+          airQualityPenaltyThresholdHigh: $airQualityPenaltyThresholdHigh,
+          airQualityPenaltyLowRate: $airQualityPenaltyLowRate,
+          airQualityPenaltyHighRate: $airQualityPenaltyHighRate,
         ) {itineraries {startTime,endTime}}
       }
     }`;

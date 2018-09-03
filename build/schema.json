@@ -1122,8 +1122,38 @@
                                 "defaultValue": null
                             },
                             {
-                                "name": "airQualityWeight",
-                                "description": "A multiplier for how much the air quality should affect the routing. Defaults to 0",
+                                "name": "airQualityPenaltyThresholdLow",
+                                "description": "Threshold when the low air quality penalty starts to affect routing",
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
+                                "name": "airQualityPenaltyThresholdHigh",
+                                "description": "Threshold when the high air quality penalty starts to affect routing",
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
+                                "name": "airQualityPenaltyLowRate",
+                                "description": "Low air quality penalty rate",
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
+                                "name": "airQualityPenaltyHighRate",
+                                "description": "High air quality penalty rate",
                                 "type": {
                                     "kind": "SCALAR",
                                     "name": "Float",
