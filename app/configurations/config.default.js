@@ -569,6 +569,7 @@ export default {
     jyvaskyla: 'jyvaskyla',
     lahti: 'lahti',
     kuopio: 'kuopio',
+    synchronicity: 'synchronicity'
   },
 
   piwikMap: [
