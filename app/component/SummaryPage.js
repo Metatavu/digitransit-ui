@@ -580,7 +580,7 @@ export default Relay.createContainer(withBreakpoint(SummaryPage), {
       arriveBy: false,
       disableRemainingWeightHeuristic: false,
       transferPenalty: null,
-      modes: null,
+      modes: "WALK", // TODO: default settings should be resolved from config
       maxWalkDistance: 0,
       preferred: null,
       ticketTypes: null,
