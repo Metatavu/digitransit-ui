@@ -220,6 +220,12 @@ export default {
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
       },
+      {
+        name: 'footer-feedback',
+        nameEn: 'Submit feedback',
+        href: 'https://goo.gl/forms/gtcYRseqQFx9eOy13',
+        icon: 'icon-icon_speech-bubble',
+      },
       { label: '<img src="https://cdn.metatavu.io/assets/synchronicity/eu.png"></img>' },
       { 
         label: '<img src="https://cdn.metatavu.io/assets/synchronicity/metatavu.png"></img>',
