@@ -142,6 +142,8 @@ const SummaryRow = (
   const legs = [];
   let realTimeAvailable = false;
   let noTransitLegs = true;
+  const pollutionExposure = data.pollutionExposure;
+  const cleanAirRoute = pollutionExposure > 0;
 
   data.legs.forEach(leg => {
     if (leg.transitLeg || leg.rentedBike) {
@@ -254,9 +256,21 @@ const SummaryRow = (
     defaultMessage: 'Itinerary',
   });
 
+  let routeCleanAirIcon = '';
+  if (cleanAirRoute) {
+    const routeCleanAirIconStyle = {marginTop: '30px', marginRight: '10px'};
+    const routeCleanAirIconTitleText = intl.formatMessage({
+      id: 'clean-air-alternative-route',
+      defaultMessage: 'Clean air route',
+    });
+
+    routeCleanAirIcon =  <img style={routeCleanAirIconStyle} title={routeCleanAirIconTitleText} src="//cdn.metatavu.io/assets/synchronicity/cleanairicon.png"/>;
+  }
+  
   /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
   return (
     <div className={classes} onClick={() => props.onSelect(props.hash)}>
+      <div>{ routeCleanAirIcon }</div>
       {props.open || props.children
         ? [
             <div className="flex-grow itinerary-heading" key="title">

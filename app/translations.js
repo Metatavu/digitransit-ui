@@ -684,7 +684,7 @@ const translations = {
     'route-here': 'Route here',
     'route-least-transfers': 'Avoid transfers',
     'route-least-walking': 'Avoid walking',
-    'route-prefer-clean-air': 'Prefer clean air',
+    'clean-air-alternative-route': 'Clean air alternative',
     'route-not-possible':
       'Unfortunately, your route is not available. Technical error: "{error}"',
     'route-page.description': 'Route {route_short_name} - {route_long_name}',
@@ -1084,9 +1084,7 @@ const translations = {
     walk: 'kävelyn',
     'walk-distance-duration': 'Kävele {distance} ({duration})',
     walking: 'Kävelyn määrä',
-    'air-quality-weight': 'Ilman laadun merkitys',
-    'ignore-air-quality' :'Ilmanlaadulla ei merkitystä',
-    'prefer-clean-air': 'Suosi puhdasta ilmaa',
+    'clean-air-alternative-route': 'Puhtaan ilman vaihtoehto',
     'walking-speed': 'Kävelynopeus',
     'warning-call-agency': `Liikennöidään kutsujoukkoliikenteenä: {routeName},
       joka on tilattava etukäteen`,
@@ -1810,7 +1808,6 @@ const translations = {
     'route-here': 'Sök rutt hit',
     'route-least-transfers': 'Minsta överföringar',
     'route-least-walking': 'Minsta gången',
-    'route-prefer-clean-air': 'Föredrar ren luft',
     'route-not-possible':
       'Tyvärr är din rutt inte möjlig. Tekniskt fel: "{error}"',
     'route-page.description': 'Linje {shortName} - {longName}',

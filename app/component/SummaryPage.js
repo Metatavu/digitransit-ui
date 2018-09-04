@@ -156,8 +156,10 @@ class SummaryPage extends React.Component {
   getItineraries = () => {
     const planItineraries = this.props.plan && this.props.plan.plan && this.props.plan.plan.itineraries ? this.props.plan.plan.itineraries : [];
     const airQualityItineraries = this.props.airQualityPlan && this.props.airQualityPlan.plan && this.props.airQualityPlan.plan.itineraries ? this.props.airQualityPlan.plan.itineraries : [];
-    return planItineraries.concat(airQualityItineraries);
-  }
+    const itineraries = planItineraries.concat(airQualityItineraries);
+
+    return itineraries;
+  };
 
   initCustomizableParameters = config => {
     this.customizableParameters = {

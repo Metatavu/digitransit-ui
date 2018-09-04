@@ -10,7 +10,9 @@ import Icon from './Icon';
 function ItinerarySummaryListContainer(props, context) {
   if (!props.error && props.itineraries && props.itineraries.length > 0) {
     const open = props.open && Number(props.open);
-    const summaries = props.itineraries.map((itinerary, i) => (
+    const itineraries = props.itineraries;
+    
+    const summaries = itineraries.map((itinerary, i) => (
       <SummaryRow
         refTime={props.searchTime}
         key={i} // eslint-disable-line react/no-array-index-key
