@@ -2,6 +2,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Relay from 'react-relay/classic';
+import { FormattedMessage } from 'react-intl';
 import PopupMock from './PopupMock';
 import MarkerPopupBottom from '../MarkerPopupBottom';
 import StopCardContainer from '../../StopCardContainer';
@@ -24,7 +25,7 @@ function StopMarkerPopup(props) {
 
     return (
       <div className="card" style={errorCardStyle}>
-        Sorry, no data available
+        <FormattedMessage id="stop-routes-load-failure" defaultMessage="Sorry, no data available" />
       </div>
     );
   }
