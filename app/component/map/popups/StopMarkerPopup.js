@@ -17,6 +17,18 @@ function StopMarkerPopup(props) {
   const stop = props.stop || props.terminal;
   const terminal = props.terminal !== null;
 
+  if (!stop) {
+    const errorCardStyle = {
+      "padding": "20px"
+    };
+
+    return (
+      <div className="card" style={errorCardStyle}>
+        Sorry, no data available
+      </div>
+    );
+  }
+
   return (
     <div className="card">
       <StopCardContainer
