@@ -19,6 +19,7 @@ import VectorTileLayerContainer from './tile-layer/VectorTileLayerContainer';
 import { boundWithMinimumArea } from '../../util/geo-utils';
 import { isDebugTiles } from '../../util/browser';
 import { BreakpointConsumer } from '../../util/withBreakpoint';
+import NoiseSensorMarkerContainer from './non-tile-layer/NoiseSensorMarkerContainer';
 
 const zoomOutText = `<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-icon_minus"/></svg>`;
 
@@ -189,6 +190,11 @@ export default class Map extends React.Component {
           disableMapTracking={this.props.disableMapTracking}
         />
         <PositionMarker key="position" />
+        {config.map.noiseSensors && config.map.noiseSensors.enabled &&
+        <NoiseSensorMarkerContainer 
+          url='/noiseLevelObservations'
+        />
+        }
       </LeafletMap>
     );
   }

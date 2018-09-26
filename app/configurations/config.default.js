@@ -126,6 +126,11 @@ export default {
       url: process.env.AIR_QUALITY_LAYER_URL
     },
     
+    noiseSensors: {
+      enabled: process.env.NOISE_SENSORS_ENABLED === "true",
+      url: process.env.NOISE_SENSORS_URL
+    },
+
     controls: {
       zoom: {
         // available controls positions: 'topleft', 'topright', 'bottomleft, 'bottomright'
