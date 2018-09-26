@@ -5,6 +5,7 @@
 /* ********* Polyfills (for node) ********* */
 const path = require('path');
 const fs = require('fs');
+const moment = require('moment');
 
 require('@babel/register')();
 
@@ -116,6 +117,21 @@ function setupErrorHandling() {
 }
 
 function setUpRoutes() {
+  app.get('/noiseLevelObservations', (req, res) => {
+    let observationsFrom = moment().subtract(5, 'minutes');
+    const url = `${process.env.NOISE_SENSORS_URL}?type=NoiseLevelObserved&q=dateModified>${observationsFrom.toISOString()}`;
+    fetch(url)
+      .then((response) => {
+        return response.json();
+      })
+      .then((noiseLevels) => {
+        res.send(noiseLevels);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
+
   app.use(
     ['/', '/fi/', '/en/', '/sv/', '/ru/', '/slangi/'],
     require('./reittiopasParameterMiddleware').default,

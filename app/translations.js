@@ -685,6 +685,7 @@ const translations = {
     'route-least-transfers': 'Avoid transfers',
     'route-least-walking': 'Avoid walking',
     'clean-air-alternative-route': 'Clean air alternative',
+    'noise-sensor-popup-title': 'Noise level',
     'stop-routes-load-failure': 'Sorry, timetable data is currently unavailable',
     'route-not-possible':
       'Unfortunately, your route is not available. Technical error: "{error}"',
@@ -1086,6 +1087,7 @@ const translations = {
     'walk-distance-duration': 'Kävele {distance} ({duration})',
     walking: 'Kävelyn määrä',
     'clean-air-alternative-route': 'Puhtaan ilman vaihtoehto',
+    'noise-sensor-popup-title': 'Melutaso',
     'stop-routes-load-failure': 'Pahoittelut, aikatauludataa ei ole juuri nyt saatavilla',
     'walking-speed': 'Kävelynopeus',
     'warning-call-agency': `Liikennöidään kutsujoukkoliikenteenä: {routeName},
