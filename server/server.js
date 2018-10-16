@@ -128,7 +128,7 @@ function setUpRoutes() {
         res.send(noiseLevels);
       })
       .catch((err) => {
-        res.status(500).send(err);
+        res.send([]);
       });
   });
 
