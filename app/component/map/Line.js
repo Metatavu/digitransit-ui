@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import cx from 'classnames';
+import PollutionLine from './PollutionLine';
 
 import { isBrowser } from '../../util/browser';
 
@@ -39,7 +40,7 @@ export default class Line extends React.Component {
 
   componentDidUpdate() {
     if (!(this.props.passive && this.props.thin)) {
-      this.line.leafletElement.bringToFront();
+      this.line && this.line.leafletElement.bringToFront();
     }
   }
 
@@ -74,30 +75,34 @@ export default class Line extends React.Component {
       }
     }
 
-    return (
-      <div style={{ display: 'none' }}>
-        <Polyline
-          key="halo"
-          ref={el => {
-            this.halo = el;
-          }}
-          positions={filteredPoints}
-          className={`leg-halo ${className}`}
-          weight={haloWeight}
-          interactive={false}
-        />
-        <Polyline
-          key="line"
-          ref={el => {
-            this.line = el;
-          }}
-          positions={filteredPoints}
-          className={`leg ${className}`}
-          color={color}
-          weight={legWeight}
-          interactive={false}
-        />
-      </div>
-    );
+    if (className == "walk") {
+      return (<PollutionLine {...this.props} />);
+    } else {
+      return (
+        <div style={{ display: 'none' }}>
+          <Polyline
+            key="halo"
+            ref={el => {
+              this.halo = el;
+            }}
+            positions={filteredPoints}
+            className={`leg-halo ${className}`}
+            weight={haloWeight}
+            interactive={false}
+          />
+          <Polyline
+            key="line"
+            ref={el => {
+              this.line = el;
+            }}
+            positions={filteredPoints}
+            className={`leg ${className}`}
+            color={color}
+            weight={legWeight}
+            interactive={false}
+          />
+        </div>
+      );
+    }
   }
 }
