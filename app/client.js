@@ -167,7 +167,6 @@ const callback = () =>
 
     function track() {
       this.href = this.props.router.createHref(this.state.location);
-      console.log(this.href);
       piwik.setCustomUrl(this.href);
       piwik.trackPageView();
       if (config.GOOGLE_ANALYTICS) {
