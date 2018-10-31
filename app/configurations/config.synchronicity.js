@@ -16,6 +16,8 @@ export default {
     TICKET_SALES_MAP: `${MAP_URL}/map/v1/hsl-ticket-sales-map/`
   },
 
+  GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS || null,
+
   contactName: {
     sv: '',
     fi: '',

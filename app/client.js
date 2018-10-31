@@ -8,6 +8,7 @@ import IsomorphicRouter from 'isomorphic-relay-router';
 import provideContext from 'fluxible-addons-react/provideContext';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ReactGA from 'react-ga';
 import debug from 'debug';
 import {
   RelayNetworkLayer,
@@ -48,6 +49,10 @@ const app = appCreator(config);
 
 const raven = Raven(config.SENTRY_DSN);
 const piwik = createPiwik(config, raven);
+
+if (config.GOOGLE_ANALYTICS) {
+  ReactGA.initialize(config.GOOGLE_ANALYTICS);
+}
 
 const addPiwik = c => {
   c.piwik = piwik; // eslint-disable-line no-param-reassign
@@ -164,6 +169,9 @@ const callback = () =>
       this.href = this.props.router.createHref(this.state.location);
       piwik.setCustomUrl(this.href);
       piwik.trackPageView();
+      if (config.GOOGLE_ANALYTICS) {
+        ReactGA.pageview(this.href);
+      }
       if (hasSwUpdate && !this.state.location.state) {
         window.location = this.href;
       }
