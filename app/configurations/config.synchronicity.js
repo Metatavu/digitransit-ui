@@ -57,6 +57,10 @@ export default {
     ticketSalesMinZoom: 16,
   },
 
+  ngsiWrapper: {
+    url: "https://synchronicity-enfuser-ngsi.metatavu.io/v2/entities"
+  },
+
   stopsMinZoom: 14,
 
   colors: {
