@@ -229,7 +229,7 @@ export default {
       {
         name: 'footer-feedback',
         nameEn: 'Submit feedback',
-        href: 'https://goo.gl/forms/gtcYRseqQFx9eOy13',
+        href: 'https://forms.gle/Zh2q5wbGegeJzcSS8',
         icon: 'icon-icon_speech-bubble',
       },
       { label: '<img src="https://cdn.metatavu.io/assets/synchronicity/eu.png"></img>' },
